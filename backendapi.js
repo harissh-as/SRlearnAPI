@@ -37,7 +37,10 @@ app.use(cors())
 app.get("/",function(request,response)
 {
     console.log("get request recieved");
+});
 
+app.get("/courselist",function(request,response)
+{
     CourseCollection.find().then((result)=>
     {
         response.status(200).json(result);
