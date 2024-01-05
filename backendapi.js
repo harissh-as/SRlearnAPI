@@ -65,6 +65,39 @@ app.get("/login/now/:usernameentered/:passwordentered",function(request,response
 
 });
 
+app.get("/register/:usernameentered/:passwordentered/:phonenoentered",function(request,response)
+{
+	var usernameentry=request.params.usernameentered;
+	var passwordentry=request.params.passwordentered;
+    var phonenoentry=request.params.phonenoentered;
+
+    var date = new Date();
+	var addMinutes = 330;
+    date.setTime(date.getTime() + (addMinutes * 60 * 1000));
+
+    const userCollection=new UserCollection(
+    {
+        _id:Date.now()+"", 
+        username:usernameentry, 
+		password:passwordentry, 
+		phoneno:phonenoentry, 
+		status:"apppending", 
+    });
+
+    try
+    {
+        userCollection.save();
+        result=[{result:"ok"}];
+        response.status(200).json(result);
+    }
+    catch(error)
+    {
+        response.status(500).json(error);
+    }
+    
+
+});
+
 app.listen(process.env.PORT || 3000,function()
 {
     console.log("server running at port 3000");
