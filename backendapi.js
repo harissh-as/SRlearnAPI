@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const { Int32 } = require("bson");
 
 var MongoClient = require('mongodb').MongoClient;
-mongoose.connect("mongodb+srv://"+process.env.DBUSERNAME+":"+process.env.DBPASSWD+"@cluster0.d3rjzrq.mongodb.net/"+process.env.DBNAME+"?retryWrites=true&w=majority",{useNewUrlParser:true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://"+process.env.DBUSERNAME+":"+process.env.DBPASSWD+"@cluster0."+process.env.DBURL+".mongodb.net/"+process.env.DBNAME+"?retryWrites=true&w=majority",{useNewUrlParser:true, useUnifiedTopology: true});
 const userSchema = new mongoose.Schema(
     {
 		_id:{type:String}, 
