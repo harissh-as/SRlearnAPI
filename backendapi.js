@@ -57,7 +57,7 @@ app.get("/login/now/:usernameentered/:passwordentered",function(request,response
 
     UserCollection.find(queryfind).then((result)=>
     {
-        response.status(200).json(result);
+        response.status(200).json(result[0]);
     }).catch((error)=>
     {
         response.status(500).json(error)    
