@@ -38,15 +38,7 @@ app.use(cors())
 app.get("/",function(request,response)
 {
     console.log("get request recieved");
-    console.log("pinging goc enms server");
-    axios.get('https://gocenmsapi.onrender.com').then((response) => 
-    {
-        if(response.data)
-        {
-			//console.log(response.data);
-			console.log("pinged");
-        }
-    });
+
 });
 
 app.get("/courselist",function(request,response)
