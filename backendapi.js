@@ -121,8 +121,18 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
 	let passwordentry=request.params.passwordentered;
     	let phonenoentry=request.params.phonenoentered;
 	let statusentry=request.params.statusentered;
-
-    await userCollection.updateOne({ _id: useridentry }, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry});
+    
+    try
+    {
+        userCollection.updateOne({ _id: useridentry }, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry});
+        result=[{result:"ok"}];
+        response.status(200).json(result);
+    }
+    catch(error)
+    {
+        response.status(500).json(error);
+    }
+    
     
 
 });
