@@ -1,4 +1,4 @@
-require("dotenv").config();
+       require("dotenv").config();
 
 const express = require("express");
 var cors = require('cors');
@@ -121,6 +121,7 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
 	let passwordentry=request.params.passwordentered;
     	let phonenoentry=request.params.phonenoentered;
 	let statusentry=request.params.statusentered;
+	console.log(useridentry);
     
     try
     {
