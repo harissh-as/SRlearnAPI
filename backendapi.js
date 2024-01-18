@@ -122,7 +122,7 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
     	let phonenoentry=request.params.phonenoentered;
 	let statusentry=request.params.statusentered;
 	console.log(useridentry);
-    
+    /*
     try
     {
         UserCollection.findByIdAndUpdate(useridentry, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry}, { new: true  });
@@ -133,6 +133,14 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
     {
         response.status(500).json(error);
     }
+    */
+    UserCollection.findByIdAndUpdate(useridentry, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry}, { new: true  }).then((result)=>
+    {
+        response.status(200).json(result);
+    }).catch((error)=>
+    {
+        response.status(500).json(error)    
+    });
 
     /*
     const updateDoc = async () => 
