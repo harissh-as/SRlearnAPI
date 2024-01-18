@@ -136,7 +136,7 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
     const updateDoc = async () => 
     { 
     	// Finding document object using doc _id 
-    	const doc = await userCollection.findById(useridentry); 
+    	const doc = await UserCollection.findById(useridentry); 
     	const output = await doc.update({username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry}) 
     	console.log(output) 
     } 
