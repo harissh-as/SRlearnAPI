@@ -114,6 +114,19 @@ app.get("/register/:usernameentered/:passwordentered/:phonenoentered",function(r
 
 });
 
+app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoentered/:statusentered",function(request,response)
+{
+	let useridentry=request.params.useridentered;
+	let usernameentry=request.params.usernameentered;
+	let passwordentry=request.params.passwordentered;
+    	let phonenoentry=request.params.phonenoentered;
+	let statusentry=request.params.statusentered;
+
+    await userCollection.updateOne({ _id: useridentry }, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry});
+    
+
+});
+
 app.listen(process.env.PORT || 3000,function()
 {
     console.log("server running at port 3000");
