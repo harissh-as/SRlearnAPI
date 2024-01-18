@@ -121,10 +121,10 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
 	let passwordentry=request.params.passwordentered;
     	let phonenoentry=request.params.phonenoentered;
 	let statusentry=request.params.statusentered;
-    /*
+    
     try
     {
-        userCollection.findByIdAndUpdate(useridentry, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry});
+        UserCollection.findByIdAndUpdate(useridentry, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry});
         result=[{result:"ok"}];
         response.status(200).json(result);
     }
@@ -132,7 +132,8 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
     {
         response.status(500).json(error);
     }
-    */
+
+    /*
     const updateDoc = async () => 
     { 
     	// Finding document object using doc _id 
@@ -141,7 +142,7 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
     	console.log(output) 
     } 
     updateDoc();
-    
+    */
 });
 
 app.listen(process.env.PORT || 3000,function()
