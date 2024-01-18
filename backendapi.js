@@ -52,6 +52,17 @@ app.get("/courselist",function(request,response)
     });
 });
 
+app.get("/userlist",function(request,response)
+{
+    UserCollection.find().then((result)=>
+    {
+        response.status(200).json(result);
+    }).catch((error)=>
+    {
+        response.status(500).json(error)    
+    });
+});
+
 app.get("/login/now/:usernameentered/:passwordentered",function(request,response)
 {
 	var usernameentry=request.params.usernameentered;
