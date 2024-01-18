@@ -124,8 +124,7 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
     
     try
     {
-        userCollection.updateOne({ _id: useridentry }, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry});
-	userCollection.save();
+        userCollection.findByIdAndUpdate(useridentry, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry});
         result=[{result:"ok"}];
         response.status(200).json(result);
     }
