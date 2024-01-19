@@ -114,6 +114,38 @@ app.get("/register/:usernameentered/:passwordentered/:phonenoentered",function(r
 
 });
 
+app.get("/createuser/:usernameentered/:passwordentered/:phonenoentered/:statusentered",function(request,response)
+{
+	let usernameentry=request.params.usernameentered;
+	let passwordentry=request.params.passwordentered;
+        let phonenoentry=request.params.phonenoentered;
+	let statusentry=request.params.statusentered;
+
+    let date = new Date();
+    let addMinutes = 330;
+    date.setTime(date.getTime() + (addMinutes * 60 * 1000));
+
+    const userCollection=new UserCollection(
+    {
+        _id:Date.now()+"", 
+        username:usernameentry, 
+	password:passwordentry, 
+	phoneno:phonenoentry, 
+	status:statusentry, 
+    });
+
+    try
+    {
+        userCollection.save();
+        result=[{result:"ok"}];
+        response.status(200).json(result);
+    }
+    catch(error)
+    {
+        response.status(500).json(error);
+    }
+});
+
 app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoentered/:statusentered",function(request,response)
 {
 	let useridentry=request.params.useridentered;
