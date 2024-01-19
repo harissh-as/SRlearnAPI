@@ -1,12 +1,12 @@
        require("dotenv").config();
 
 const express = require("express");
-var cors = require('cors');
+const cors = require('cors');
 const mongoose = require("mongoose");
 const { Int32 } = require("bson");
 const axios = require('axios');
 
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 mongoose.connect("mongodb+srv://"+process.env.DBUSERNAME+":"+process.env.DBPASSWD+"@cluster0."+process.env.DBURL+".mongodb.net/"+process.env.DBNAME+"?retryWrites=true&w=majority",{useNewUrlParser:true, useUnifiedTopology: true});
 const userSchema = new mongoose.Schema(
     {
@@ -65,9 +65,9 @@ app.get("/userlist",function(request,response)
 
 app.get("/login/now/:usernameentered/:passwordentered",function(request,response)
 {
-	var usernameentry=request.params.usernameentered;
-	var passwordentry=request.params.passwordentered;
-	var queryfind = {};
+	let usernameentry=request.params.usernameentered;
+	let passwordentry=request.params.passwordentered;
+	let queryfind = {};
 	queryfind["username"] = usernameentry;
 	queryfind["password"] = passwordentry;
 
@@ -83,12 +83,12 @@ app.get("/login/now/:usernameentered/:passwordentered",function(request,response
 
 app.get("/register/:usernameentered/:passwordentered/:phonenoentered",function(request,response)
 {
-	var usernameentry=request.params.usernameentered;
-	var passwordentry=request.params.passwordentered;
-    var phonenoentry=request.params.phonenoentered;
+	let usernameentry=request.params.usernameentered;
+	let passwordentry=request.params.passwordentered;
+    	let phonenoentry=request.params.phonenoentered;
 
-    var date = new Date();
-	var addMinutes = 330;
+    let date = new Date();
+    let addMinutes = 330;
     date.setTime(date.getTime() + (addMinutes * 60 * 1000));
 
     const userCollection=new UserCollection(
@@ -146,18 +146,27 @@ app.get("/createuser/:usernameentered/:passwordentered/:phonenoentered/:statusen
     }
 });
 
-app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoentered/:statusentered",function(request,response)
+app.get("/createcourse/:coursenameentered/:videolinkentered/:descentered",function(request,response)
 {
-	let useridentry=request.params.useridentered;
-	let usernameentry=request.params.usernameentered;
-	let passwordentry=request.params.passwordentered;
-    	let phonenoentry=request.params.phonenoentered;
-	let statusentry=request.params.statusentered;
-	console.log(useridentry);
-    /*
+	let coursenameentry=request.params.coursenameentered;
+	let videolinkentry=request.params.videolinkentered;
+        let descentry=request.params.descentered;
+
+    let date = new Date();
+    let addMinutes = 330;
+    date.setTime(date.getTime() + (addMinutes * 60 * 1000));
+
+    const courseCollection=new CourseCollection(
+    {
+	_id:Date.now()+"", 
+        coursename:coursenameentry, 
+	videolink:videolinkentry, 
+	description:descentry, 
+    });
+
     try
     {
-        UserCollection.findByIdAndUpdate(useridentry, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry}, { new: true  });
+        courseCollection.save();
         result=[{result:"ok"}];
         response.status(200).json(result);
     }
@@ -165,7 +174,34 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
     {
         response.status(500).json(error);
     }
-    */
+});
+
+app.get("/updatecourse/:courseidentered/:coursenameentered/:videolinkentered/:descentered",function(request,response)
+{
+	let courseidentry=request.params.courseidentered;
+	let coursenameentry=request.params.coursenameentered;
+	let videolinkentry=request.params.videolinkentered;
+        let descentry=request.params.descentered;
+	
+    CourseCollection.findByIdAndUpdate(courseidentry, {coursename:coursenameentry, videolink:videolinkentry, description:descentry}, { new: true  }).then((result)=>
+    {
+        response.status(200).json(result);
+    }).catch((error)=>
+    {
+        response.status(500).json(error)    
+    });
+
+
+});
+
+app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoentered/:statusentered",function(request,response)
+{
+	let useridentry=request.params.useridentered;
+	let usernameentry=request.params.usernameentered;
+	let passwordentry=request.params.passwordentered;
+    	let phonenoentry=request.params.phonenoentered;
+	let statusentry=request.params.statusentered;
+
     UserCollection.findByIdAndUpdate(useridentry, {username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry}, { new: true  }).then((result)=>
     {
         response.status(200).json(result);
@@ -174,16 +210,7 @@ app.get("/updateuser/:useridentered/:usernameentered/:passwordentered/:phonenoen
         response.status(500).json(error)    
     });
 
-    /*
-    const updateDoc = async () => 
-    { 
-    	// Finding document object using doc _id 
-    	const doc = await UserCollection.findById(useridentry); 
-    	const output = await doc.update({username: usernameentry, password: passwordentry, phoneno: phonenoentry, status: statusentry}) 
-    	console.log(output) 
-    } 
-    updateDoc();
-    */
+
 });
 
 app.listen(process.env.PORT || 3000,function()
